@@ -2,8 +2,8 @@
 <html lang="id">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fransiska Artha Apriani Samura - Portofolio</title>
     <meta name="description"
         content="Information Systems Student at Atma Jaya Yogyakarta University passionate about data analytics, system analysis, and machine learning">
@@ -94,11 +94,14 @@
             width: 100%;
         }
 
-        /* Hamburger Menu untuk Mobile */
+        /* Hamburger Menu (desktop hidden by default) */
         .hamburger {
             display: none;
             flex-direction: column;
             cursor: pointer;
+            background: transparent;
+            border: none;
+            padding: 6px;
         }
 
         .hamburger span {
@@ -106,7 +109,9 @@
             height: 3px;
             background: #333;
             margin: 3px 0;
-            transition: 0.3s;
+            transition: 0.25s;
+            display: block;
+            border-radius: 2px;
         }
 
         /* ==== HERO SECTION ==== */
@@ -115,12 +120,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            /* tambahkan ini supaya vertikal tengah */
             padding: 5rem 2rem;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
-
-
 
         .hero-container {
             max-width: 1200px;
@@ -336,6 +338,57 @@
             margin-top: 3rem;
         }
 
+        .expertise-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 20px;
+        }
+
+        .expertise-column h3 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            color: var(--text-color);
+        }
+
+        .skill-category {
+            margin-bottom: 20px;
+        }
+
+        .skill-category h4 {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: var(--accent-color);
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-tag {
+            background: var(--bg-color);
+            color: var(--text-color);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: 0.3s;
+            border: 1px solid var(--accent-color);
+        }
+
+        .skill-tag:hover {
+            background: var(--accent-color);
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            .expertise-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+
         .skill-category {
             background: rgba(255, 255, 255, 0.1);
             padding: 2rem;
@@ -465,26 +518,56 @@
 
         /* Tablet */
         @media (max-width: 768px) {
+
+            /* Keep desktop nav unchanged - only override for mobile popup */
             .nav-links {
+                /* hide the inline desktop menu on smaller screens, switch to popup-style menu */
                 display: none;
                 position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: white;
+                top: calc(100% + 10px);
+                /* below header */
+                right: 1rem;
+                width: 220px;
+                background: rgba(255, 255, 255, 0.98);
                 flex-direction: column;
-                padding: 1rem;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                gap: 0;
+                padding: 0.5rem 0;
+                box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+                border-radius: 10px;
+                z-index: 2000;
+                list-style: none;
             }
 
             .nav-links.active {
                 display: flex;
             }
 
-            .hamburger {
-                display: flex;
+            /* style items inside popup */
+            .nav-links li {
+                padding: 0.6rem 1rem;
             }
 
+            .nav-links li+li {
+                border-top: 1px solid rgba(0, 0, 0, 0.06);
+            }
+
+            .nav-links a {
+                color: #222;
+                display: block;
+                font-weight: 600;
+                padding: 0.2rem 0;
+            }
+
+            /* show hamburger on tablet/mobile */
+            .hamburger {
+                display: flex;
+                position: relative;
+                z-index: 2100;
+                /* above popup so user can still click */
+                margin-left: auto;
+            }
+
+            /* small adjustments for hero on tablet */
             .hero-container {
                 grid-template-columns: 1fr;
                 text-align: center;
@@ -518,7 +601,7 @@
             }
         }
 
-        /* Mobile */
+        /* Mobile (narrow) */
         @media (max-width: 480px) {
             .hero {
                 padding: 0 1rem;
@@ -593,6 +676,19 @@
         .section {
             animation: fadeInUp 0.6s ease-out;
         }
+
+        /* hamburger "X" visual (optional) */
+        .hamburger.open span:nth-child(1) {
+            transform: translateY(6px) rotate(45deg);
+        }
+
+        .hamburger.open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.open span:nth-child(3) {
+            transform: translateY(-6px) rotate(-45deg);
+        }
     </style>
 </head>
 
@@ -612,8 +708,8 @@
                 <li><a href="#contact">Contact</a></li>
             </ul>
 
-            <!-- Hamburger Menu untuk Mobile -->
-            <div class="hamburger" id="hamburger">
+            <!-- Hamburger Menu untuk Mobile (tetap ada di DOM, tampil hanya di mobile) -->
+            <div class="hamburger" id="hamburger" role="button" aria-label="Toggle navigation" tabindex="0">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -627,17 +723,17 @@
             <!-- Konten Hero -->
             <div class="hero-content">
                 <h1>Hi, I'm Fransiska</h1>
-                <p class="subtitle">Information Systems Student | Data Analytics Enthusiast | Machine Learning Explorer
+                <p class="subtitle">Information Systems Student | Aspiring Quality Assurance Specialist | Data & Machine
+                    Learning Enthusiast
                 </p>
                 <p class="description">
-                    Passionate about turning data into meaningful insights and creating technology solutions that make a
-                    real impact.
-                    Currently studying at Atma Jaya Yogyakarta University while gaining hands-on experience in data
-                    analytics and system analysis.
+                    Detail-oriented Information Systems student with interest in quality assurance, data analytics, and
+                    machine learning. Experienced in data-driven projects, system analysis, and QA processes to ensure
+                    reliable and impactful solutions.
                 </p>
 
                 <div class="quote">
-                    "Turning insights into action, and data into stories that matter."
+                    “From data to decisions, ensuring every insight and system truly matters.”
                 </div>
 
                 <!-- Tombol Call-to-Action -->
@@ -716,6 +812,7 @@
                     <li>Machine Learning & Predictive Analytics</li>
                     <li>Data Analytics & Visualization</li>
                     <li>System Analysis & Requirements Engineering</li>
+                    <li>Quality Assurance & Testing</li>
                     <li>Community Outreach & Mentoring</li>
                 </ul>
             </div>
@@ -742,7 +839,7 @@
             </div>
 
             <div class="project-card">
-                <h3>Login – Kerinci.Co</h3>
+                <h3>Kerinci.Co</h3>
                 <p>
                     A secure and user-friendly authentication system for the Kerinci.Co platform. Features modern UI/UX
                     design, robust security measures, and responsive design.
@@ -768,73 +865,157 @@
                 </div>
             </div>
 
+            <div class="project-card">
+                <h3>System Recommendation</h3>
+                <p>
+                    Recommendation system utilizing Content-based Filtering and Collaborative Filtering approaches.
+                    Designed to address problem-solving with applied machine learning for generating relevant and
+                    personalized suggestions.
+                </p>
+                <div class="project-links">
+                    <a href="https://github.com/fransiskaartha/MachineLearningTerapan-system-recommendation-"
+                        target="_blank">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <h3>Sentiment Analysis - Discord</h3>
+                <p>
+                    Sentiment analysis system for Discord conversations using natural language processing and machine
+                    learning techniques. Built to classify and interpret user sentiments for better community insights.
+                </p>
+                <div class="project-links">
+                    <a href="https://github.com/fransiskaartha/AnalisisSentimenDiscord" target="_blank">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <h3>Data Clustering & Classification</h3>
+                <p>
+                    Applied K-Means clustering and classification algorithms such as SVM and Random Forest to analyze
+                    structured datasets, uncover hidden patterns, and build predictive models.
+                </p>
+                <div class="project-links">
+                    <a href="https://github.com/fransiskaartha/-Data-Clustering-Classification" target="_blank">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <h3>Built ETL Pipeline</h3>
+                <p>
+                    Developed an ETL pipeline to extract, transform, and load raw data into structured formats, enabling
+                    efficient preprocessing and analysis for downstream machine learning tasks.
+                </p>
+                <div class="project-links">
+                    <a href="https://github.com/fransiskaartha/MembangunETLPipeline/tree/main/MembangunETLPipeline" target="_blank">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                </div>
+            </div>
+
         </div>
     </section>
 
-
     <!-- ==== EXPERTISE SECTION ==== -->
     <section class="section" id="expertise">
-        <h2>Technical Expertise</h2>
-        <div class="skills-grid">
-            <div class="skill-category">
-                <h3><i class="fas fa-code"></i> Programming Languages</h3>
-                <div class="skill-tags">
-                    <span class="skill-tag">Python</span>
-                    <span class="skill-tag">JavaScript</span>
-                    <span class="skill-tag">C++</span>
-                    <span class="skill-tag">SQL</span>
+        <h2>Expertise</h2>
+        <div class="expertise-grid">
+            <!-- KIRI: Technical Expertise -->
+            <div class="expertise-column">
+                <h3>Technical Expertise</h3>
+
+                <div class="skill-category">
+                    <h4><i class="fas fa-code"></i> Programming Languages</h4>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">C++</span>
+                        <span class="skill-tag">SQL</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h4><i class="fas fa-brain"></i> Data Science & ML</h4>
+                    <div class="skill-tags">
+                        <span class="skill-tag">pandas</span>
+                        <span class="skill-tag">numpy</span>
+                        <span class="skill-tag">scikit-learn</span>
+                        <span class="skill-tag">Hugging Face</span>
+                        <span class="skill-tag">Google Colab</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h4><i class="fas fa-globe"></i> Web Development</h4>
+                    <div class="skill-tags">
+                        <span class="skill-tag">HTML</span>
+                        <span class="skill-tag">CSS</span>
+                        <span class="skill-tag">Laravel</span>
+                        <span class="skill-tag">Next.js</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h4><i class="fas fa-tools"></i> Tools & Platforms</h4>
+                    <div class="skill-tags">
+                        <span class="skill-tag">MySQL</span>
+                        <span class="skill-tag">GitHub</span>
+                        <span class="skill-tag">VS Code</span>
+                        <span class="skill-tag">Trello</span>
+                        <span class="skill-tag">Draw.io</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h4><i class="fas fa-tasks"></i> Quality Assurance & Testing</h4>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Cypress</span>
+                        <span class="skill-tag">Software Testing</span>
+                        <span class="skill-tag">Test Automation</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h4><i class="fas fa-chart-line"></i> Business Analysis</h4>
+                    <div class="skill-tags">
+                        <span class="skill-tag">BPMN</span>
+                        <span class="skill-tag">Requirements Engineering</span>
+                        <span class="skill-tag">System Analysis</span>
+                        <span class="skill-tag">Data Visualization</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h4><i class="fas fa-paint-brush"></i> Design & Productivity</h4>
+                    <div class="skill-tags"> <span class="skill-tag">Canva</span>
+                        <span class="skill-tag">MS Word</span>
+                        <span class="skill-tag">MS Excel</span>
+                        <span class="skill-tag">Presentation</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="skill-category">
-                <h3><i class="fas fa-brain"></i> Data Science & ML</h3>
-                <div class="skill-tags">
-                    <span class="skill-tag">pandas</span>
-                    <span class="skill-tag">numpy</span>
-                    <span class="skill-tag">scikit-learn</span>
-                    <span class="skill-tag">Hugging Face</span>
-                    <span class="skill-tag">Google Colab</span>
-                </div>
-            </div>
+            <!-- KANAN: Soft Skills -->
+            <div class="expertise-column">
+                <h3>Soft Skills</h3>
 
-            <div class="skill-category">
-                <h3><i class="fas fa-globe"></i> Web Development</h3>
-                <div class="skill-tags">
-                    <span class="skill-tag">Next.js</span>
-                    <span class="skill-tag">Laravel</span>
-                    <span class="skill-tag">HTML/CSS</span>
-                    <span class="skill-tag">Responsive Design</span>
-                </div>
-            </div>
-
-            <div class="skill-category">
-                <h3><i class="fas fa-database"></i> Database & Tools</h3>
-                <div class="skill-tags">
-                    <span class="skill-tag">MySQL</span>
-                    <span class="skill-tag">GitHub</span>
-                    <span class="skill-tag">VS Code</span>
-                    <span class="skill-tag">Draw.io</span>
-                    <span class="skill-tag">Trello</span>
-                </div>
-            </div>
-
-            <div class="skill-category">
-                <h3><i class="fas fa-chart-line"></i> Business Analysis</h3>
-                <div class="skill-tags">
-                    <span class="skill-tag">BPMN</span>
-                    <span class="skill-tag">Requirements Engineering</span>
-                    <span class="skill-tag">System Analysis</span>
-                    <span class="skill-tag">Data Visualization</span>
-                </div>
-            </div>
-
-            <div class="skill-category">
-                <h3><i class="fas fa-paint-brush"></i> Design & Productivity</h3>
-                <div class="skill-tags">
-                    <span class="skill-tag">Canva</span>
-                    <span class="skill-tag">MS Word</span>
-                    <span class="skill-tag">MS Excel</span>
-                    <span class="skill-tag">Presentation</span>
+                <div class="skill-category">
+                    <div class="skill-tags">
+                        <span class="skill-tag">Communication</span>
+                        <span class="skill-tag">Collaboration</span>
+                        <span class="skill-tag">Adaptability</span>
+                        <span class="skill-tag">Problem-Solving</span>
+                        <span class="skill-tag">Time Management</span>
+                        <span class="skill-tag">Critical Thinking</span>
+                        <span class="skill-tag">Leadership</span>
+                        <span class="skill-tag">Creativity</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -845,9 +1026,8 @@
         <h2>Let's Connect</h2>
         <div class="contact-content">
             <p>
-                I'm always excited to connect with fellow tech enthusiasts, potential collaborators, and anyone
-                interested in data science and technology.
-                Let's create something impactful together!
+                I’m always excited to connect with fellow tech enthusiasts, collaborators, and professionals in data,
+                QA, and technology. Let’s build something meaningful together!
             </p>
 
             <div class="contact-info">
@@ -880,13 +1060,45 @@
         const hamburger = document.getElementById('hamburger');
         const navLinks = document.getElementById('navLinks');
 
-        hamburger.addEventListener('click', () => {
+        function toggleMenu() {
             navLinks.classList.toggle('active');
+            hamburger.classList.toggle('open');
+        }
+
+        hamburger.addEventListener('click', (e) => {
+            e.stopPropagation(); // prevent click from bubbling to document
+            toggleMenu();
+        });
+
+        // allow keyboard toggling (Enter / Space)
+        hamburger.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleMenu();
+            }
+        });
+
+        // close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const isClickInside = navLinks.contains(e.target) || hamburger.contains(e.target);
+            if (!isClickInside && navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('open');
+            }
+        });
+
+        // close on escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('open');
+            }
         });
 
         // ==== SMOOTH SCROLLING untuk Navigation Links ====
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
+                // normal internal link behavior for mobile popup: close popup then smooth scroll
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
@@ -894,9 +1106,11 @@
                         behavior: 'smooth',
                         block: 'start'
                     });
-
-                    // Tutup mobile menu setelah klik
+                }
+                // close mobile menu after click (if open)
+                if (navLinks.classList.contains('active')) {
                     navLinks.classList.remove('active');
+                    hamburger.classList.remove('open');
                 }
             });
         });
@@ -912,3 +1126,7 @@
                 header.style.boxShadow = 'none';
             }
         });
+    </script>
+</body>
+
+</html>
